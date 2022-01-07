@@ -1,5 +1,4 @@
-process.env.TZ = "Europe/Amsterdam";
-console.log(new Date().toString());
+process.env.TZ = "Europe/Amsterdam"; console.log(new Date().toString());
 
 const Discord = require('discord.js');
 const { Client, Intents } = require('discord.js');
