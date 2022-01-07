@@ -3,7 +3,7 @@
   "version": "v4.6.2",
   "state": "Maintained",
   "stage": "Beta",
-  "description": "",
+  "description": "MrBB - Discord Bot",
   "main": "index.js",
   "scripts": {
     "start": "node .",
@@ -12,8 +12,8 @@
     "node-update-then-clean": "npm run node-update && npm run node-clean-cache"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Favoslav_",
+  "license": "BOAGC",
   "dependencies": {
     "@gcommands/events": "^2.1.1",
     "discord.js": "^13.3.1",
