@@ -1,1 +1,5 @@
 .replit
+server.js
+commands/
+event/
+packages/
