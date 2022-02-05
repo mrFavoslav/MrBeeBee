@@ -3,8 +3,9 @@ const { ArgumentType, Command } = require("gcommands");
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
-      name: "embed",
+      name: "news",
       description: "Vytvoří custom embed zprávu.",
+      userRequiredPermissions: 'ADMINISTRATOR',
     });
   }
 

@@ -5,12 +5,13 @@ const { Client, Intents } = require('discord.js');
 const { GCommandsClient } = require("gcommands");
 const { join } = require("path");
 const client = new GCommandsClient({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_INVITES],
+  intents: new Discord.Intents(32767),
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
   loader: {
     cmdDir: join(__dirname + "/cmds"),
     eventDir: join(__dirname, "/events"),
   },
-  language: "czech",
+  language: "english",
   commands: {
     unkownCommandMessage: false,
     caseSensitiveCommands: false,
