@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const index = require('../index.js');
+const prefix = "b";
 const { ArgumentType, Command } = require("gcommands");
 module.exports = class extends Command {
   constructor(...args) {
@@ -13,9 +13,9 @@ module.exports = class extends Command {
     const helpembed = new Discord.MessageEmbed()
       .setColor('#cc3300')
       .setTitle('**Help - Vyber si kategorii.**')
-      .addField('Utilities', `Použití: ${index.prefix}helpu `)
-      .addField('Fun', `Použití: ${index.prefix}helpf `)
-      .addField('Moderation', `Použití: ${index.prefix}helpm `)
+      .addField('Utilities', `Použití: ${prefix}helpu `)
+      .addField('Fun', `Použití: ${prefix}helpf `)
+      .addField('Moderation', `Použití: ${prefix}helpm `)
       .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
 

@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const index = require('../index.js');
+const prefix = "b";
 const { ArgumentType, Command } = require("gcommands");
 module.exports = class extends Command {
   constructor(...args) {
@@ -14,13 +14,13 @@ module.exports = class extends Command {
     const helpembed = new Discord.MessageEmbed()
       .setColor('#cc3300')
       .setTitle('**Help Kat. - Moderation.**')
-      .addField('**Mute**', `Použití: ${index.prefix}mute <@uživatel>`)
-      .addField('**Unmute**', `Použití: ${index.prefix}unmute <@uživatel>`)
-      .addField('**Ban**', `Použití: ${index.prefix}ban <@uživatel> <reason>`)
-      .addField('**Kick**', `Použití: ${index.prefix}kick <@uživatel> <reason>`)
-      .addField('**Warn**', `Použití: ${index.prefix}warn <@uživatel> <reason>`)
-      .addField('**Strike**', `Použití: ${index.prefix}strike <@uživatel> <reason>`)
-      .addField('**Purge/Clear**', `Použití: ${index.prefix}clear nebo ${index.prefix}purge <@uživatel>`)
+      .addField('**Mute**', `Použití: ${prefix}mute <@uživatel>`)
+      .addField('**Unmute**', `Použití: ${prefix}unmute <@uživatel>`)
+      .addField('**Ban**', `Použití: ${prefix}ban <@uživatel> <reason>`)
+      .addField('**Kick**', `Použití: ${prefix}kick <@uživatel> <reason>`)
+      .addField('**Warn**', `Použití: ${prefix}warn <@uživatel> <reason>`)
+      .addField('**Strike**', `Použití: ${prefix}strike <@uživatel> <reason>`)
+      .addField('**Purge/Clear**', `Použití: ${prefix}clear nebo ${prefix}purge <@uživatel>`)
       .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
 

@@ -30,6 +30,6 @@ module.exports = class extends Command {
   //.setFooter(client.user.username, client.user.displayAvatarURL({ dynamic: true }))
   .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
   message.delete(1)
- respond(customEmbed)
+ message.channel.send({ embeds: [customEmbed] });
   }
 }
