@@ -5,11 +5,20 @@ module.exports = class extends Command {
     super(...args, {
       name: "avatar",
       description: "Ukáže Avatar uživatele.",
+      args: [
+        {
+          name: "user",
+          type: ArgumentType.USER,
+          description: "Target",
+          prompt: "Čí avatar chceš dostat?",
+          required: false,
+        },
+      ],
     });
   }
 
-  async run({ client, respond, message }) {
-    let user = message.mentions.users.first() || message.author
+  async run({ respond, message, args }) {
+    const user = args.getUser('user') || message.author
 
     const avatarEmbed = new Discord.MessageEmbed()
       .setColor('#00FFF3')
@@ -17,4 +26,4 @@ module.exports = class extends Command {
       .setImage(user.displayAvatarURL({ dynamic: true, size: 512 }));
     respond(avatarEmbed);
   }
-}
+} 

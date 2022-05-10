@@ -10,7 +10,7 @@ module.exports = class extends Command {
     });
   }
 
-  async run({ respond, message, client }) {
+  async run({ respond, message }) {
     const helpembed = new Discord.MessageEmbed()
       .setColor('#cc3300')
       .setTitle('**Help Kat. - Moderation.**')

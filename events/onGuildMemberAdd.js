@@ -10,6 +10,7 @@ module.exports = class Ping extends Event {
   }
 
   async run(client, member) {
+    if (member.bot) return;
     if (member.id === '816656200993079297') {
       console.log('--GargUS joined.')
     } else {
@@ -20,7 +21,7 @@ module.exports = class Ping extends Event {
         .setDescription(`Ahoj ${member}! Vítej na **${member.guild.name}**! Je nás zde ${member.guild.memberCount}! Doufám že si to zde užiješ! Majitelem serveru je ${owner}! Přečti si prosím <#816664688015179782>! Díky.`)
         .setAuthor(member.user.tag, member.user.displayAvatarURL({ dynamic: true }))
         .setTimestamp()
-        .setImage('https://cdn.discordapp.com/attachments/817323618576760853/828679554851143701/NewUser.png')
+        .setImage('https://cdn.discordapp.com/attachments/945363908078747688/945363915888541766/unknown.png')
 
       const channel = client.channels.cache.get('828674300969484298');
       channel.send({ embeds: [joinembed] })

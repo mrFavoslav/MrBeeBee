@@ -1,7 +1,7 @@
 process.env.TZ = "Europe/Amsterdam"; console.log(new Date().toString());
 
 const Discord = require('discord.js');
-const { Client, Intents } = require('discord.js');
+//const { Client, Intents } = require('discord.js');
 const { GCommandsClient } = require("gcommands");
 const { join } = require("path");
 const client = new GCommandsClient({
@@ -11,7 +11,7 @@ const client = new GCommandsClient({
     cmdDir: join(__dirname + "/cmds"),
     eventDir: join(__dirname, "/events"),
   },
-  language: "english",
+  language: "czech",
   commands: {
     unkownCommandMessage: false,
     caseSensitiveCommands: false,
@@ -27,4 +27,6 @@ client
   .on("log", console.log)
   .on("debug", console.log)
 
-client.login(process.env['TOKEN'])
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '/home/ubuntu/mrbb/.env') })
+client.login(process.env.TOKEN)

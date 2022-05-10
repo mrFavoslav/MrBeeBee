@@ -36,7 +36,7 @@ module.exports = class extends Command {
     { name: '14)', value: 'Je přísně zakázano obcházet tresty.', inline: true },
     { name: '\u200B', value: '\u200B', inline: true },
     { name: '\u200B', value: '\u200B' },
-    { name: 'TOS a Guidelines', value: '➣ Platí zde pravidla TOS a Guidelines @everyone\n🔗 https://discordapp.com/terms\n🔗: https://discordapp.com/guidelines\n➣ S ověřením souhlasíš s pravidly tohoto discord serveru a s pravidly TOS a Guidelines\n➣ Také souhlasíš že je ti více než 13 let a můžeš legálně používat discord, pokud AT zjistí že ti ještě 13 let nebylo bude ti udělen ban do doby než ti bude 13 let.', inline: true },
+    { name: 'TOS a Guidelines', value: '➣ Platí zde pravidla TOS a Guidelines @everyone\n🔗 https://discordapp.com/terms\n🔗 https://discordapp.com/guidelines\n➣ S ověřením souhlasíš s pravidly tohoto discord serveru a s pravidly TOS a Guidelines\n➣ Také souhlasíš že je ti více než 13 let a můžeš legálně používat discord, pokud AT zjistí že ti ještě 13 let nebylo bude ti udělen ban do doby než ti bude 13 let.', inline: true },
     { name: '\u200B', value: '\u200B' },
     { name: 'Ověření', value: 'Ověříš se pomocí zareagování na tuto\nzprávu kliknutím na tlačítko = ✅', inline: true }
 	)

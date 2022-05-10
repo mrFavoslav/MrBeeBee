@@ -14,8 +14,8 @@ module.exports = class extends Command {
       const pingembed = new Discord.MessageEmbed()
       .setTitle('⏳ Ping')
       .addFields(
-        { name: '🤖 Můj Ping', value: `${ping}ms`, inline: true },
-        { name: '🌐 WebSocket Ping', value: `${client.ws.ping}ms`, inline: true },
+        { name: '🤖 Ping Bota', value: `${ping}ms`, inline: true },
+        { name: '🌐 Ping WebSocketu', value: `${client.ws.ping}ms`, inline: true },
       )
       .setTimestamp()
 

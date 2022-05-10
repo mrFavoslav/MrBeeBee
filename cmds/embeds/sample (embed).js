@@ -9,7 +9,7 @@ module.exports = class extends Command {
     });
   }
 
-  async run({ client, respond, message }) {
+  async run({ message }) {
     const customEmbed = new Discord.MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('Some title')

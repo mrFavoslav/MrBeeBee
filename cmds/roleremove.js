@@ -6,13 +6,21 @@ module.exports = class extends Command {
       name: "rolerem",
       description: "Odebere všem specifickou roli.",
       userRequiredPermissions: 'MANAGE_ROLES' || 'ADMINISTRATOR',
+      args: [
+        {
+          name: "role",
+          type: ArgumentType.ROLE,
+          description: "Role",
+          prompt: "Definuj prosím roli.",
+          required: true,
+        },
+      ],
     });
   }
 
-  async run({ member, client, message, guild, respond }) { 
+  async run({ message, respond, args }) { 
     
-    let role = message.mentions.roles.first() 
-    if (!role) return respond('Prosím definuj roli!')
+    let role = args.getRole('role')
     
       message.guild.members.cache.filter((member) => !member.user.bot).forEach(member => {
         setInterval(function() {
