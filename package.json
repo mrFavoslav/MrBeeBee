@@ -19,7 +19,7 @@
     "@gcommands/events": "^2.1.1",
     "@tmware/status-rotate": "^1.2.9",
     "cron": "^1.8.2",
-    "discord.js": "^13.6.0",
+    "discord.js": "^13.7.0",
     "dotenv": "^16.0.0",
     "dotenv-extended": "^2.9.0",
     "express": "^4.17.2",
