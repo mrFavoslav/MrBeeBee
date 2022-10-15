@@ -5,35 +5,27 @@ module.exports = class extends Command {
     super(...args, {
       name: "news2",
       description: "Vytvoří custom embed zprávu.",
-      userRequiredPermissions: 'ADMINISTRATOR',
+      //userRequiredPermissions: 'ADMINISTRATOR',
     });
   }
 
   async run({ client, message }) {
     const customEmbed = new Discord.MessageEmbed()
-      //.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-      //.setAuthor(client.user.username, client.user.displayAvatarURL({ dynamic: true }))
-      .setColor('#0099ff')
-      .setTitle('**Novinky ze serveru a okolí.**')
-      //.setDescription('Všechny nové featury a věci od posledního oznámení.')
-      .setDescription('Pár nejnovějších featur a věcí od posledního oznámení.')
+      .setColor('#d61e1e')
+      .setTitle('**Survival Server pro IT1A**')
+      .setDescription('Oznámení o provozu serveru. @everyone')
       .setThumbnail('https://cdn.discordapp.com/icons/779693986603991072/85ba883ba6f1c685a86652a35c76b29f.png?size=4096')
       .addFields(
+        { name: 'Význam serveru', value: 'Společně s panem Danem a panem Pavlem jsme se rozhodli vytvořit Survival Server. Tento server poběží na verzi 1.16.5 24/7 s restarty ve tři hodiny ráno. Na serveru je také dynmapa http://map.boagc.tk/ a předgenerovaný svět, který je omezen borderem 6000 blocků do každého směru v každé dimenzi. Svět se popřídě může zvětšit. Také se plánuje pozdější rebuild na nejnovší verzi minecraftu (nyní 1.19.2).', inline: true },
         { name: '\u200B', value: '\u200B' },
-        { name: 'Purge Command', value: 'Na serveru je nyní funkční purge command!', inline: true },
-        { name: 'Welcome messages', value: 'WM by nyní měla fungovat! Doufám..', inline: true },
-        { name: 'Maintaince Mode', value: 'Tento mód by za chvíli měl skončit a server by se měl vrátit zpět do normálního stavu.', inline: true },
-        { name: 'Verifikace', value: 'Bude zde nový způsob verifikace. Až skončí maintaince mode tak se budete muset ověřit aby jste měli přístup k serveru!', inline: true },
-        { name: '\u200B', value: '\u200B'},
-        { name: 'Web serveru a bota', value: '**https://www.boagc.tk**\nTento server má nyní vlastní Web. Budou na něm informace o našem serveru, membeři, atp.'},
-        { name: '**https://www.mrbb.tk**', value: 'MrBB má nyní vlastní web. Budou na něm updaty bota, stav bota, atp.', inline: true },
-        { name: '\u200B', value: '\u200B'},
-        { name: 'Personální oznámení', value: '**Můj vlastní web**\n**https://www.favoslav.tk**\nNa tomto webu budou moje projekty, odkazy na ně a na jiné věci, (osobní portfolio), atp.' },
+        { name: 'Invite na server', value: 'Na server jsou zváni všichni z třídy IT1A. Pokud někdo chce, tak může na server přijít i např. váš kamarád. Jen ať nedělá píčoviny. Děkuji.' },
+        { name: '\u200B', value: '\u200B' },
+        { name: 'Dodatečné informace', value: 'Další informace máte v kanálu pro pravidla -> <#1028269860209311754> a kanálu pro status serveru (jako např. ip) -> <#1028218159846674452>. \n\n**SERVER SE SPUSTÍ V 14:30!!**' },
       )
       .setTimestamp()
-      //.setFooter(client.user.username, client.user.displayAvatarURL({ dynamic: true }))
       .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
     message.delete(1)
-    client.channels.cache.get('816665000542339092').messages.fetch('945369545177169961').then(msg => msg.edit({ embeds: [customEmbed] }))
+    //client.channels.cache.get('816665000542339092').messages.fetch('982962641746153562').then(msg => msg.edit({ embeds: [customEmbed] }))
+    message.channel.send({ embeds: [customEmbed] });
   }
 }

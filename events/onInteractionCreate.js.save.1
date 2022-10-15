@@ -3,17 +3,17 @@ const { MessageActionRow, MessageSelectMenu } = require('discord.js');
 const { Event } = require("gcommands")
 module.exports = class Ping extends Event {
   constructor(client) {
-    super(client, {
+    super(cli, {
       name: "interactionCreate",
       once: false,
-      ws: false
+      ws:///// false
     })
-  }
+/////////  }
 
   async run(client, interaction) {
     if (interaction.member.bot) return;
     if (interaction.isCommand()) return;
-//    if (!message.guild.id === '779693986603991072') return;
+    if (!message.guild.id === '779693986603991072') return;
 
     /*-------------*/
     if (interaction.isButton()) {

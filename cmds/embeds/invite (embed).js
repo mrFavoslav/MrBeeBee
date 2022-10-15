@@ -13,7 +13,7 @@ module.exports = class extends Command {
     const customEmbed = new Discord.MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('**Invite link na BOAGC**')  
-  .setImage('https://cdn.discordapp.com/attachments/817323618576760853/939607977671929906/GeoGlitchedv2.png')
+  .setImage('https://cdn.discordapp.com/attachments/945363908078747688/993714331323748362/GeoGlitchedv2.jpg')
 	.addFields(
 		{ name: 'Official', value: 'https://discord.gg/fHZ4kPAxxk '},
 		{ name: 'Favoslav_', value: 'https://dsc.favoslav.tk/'},

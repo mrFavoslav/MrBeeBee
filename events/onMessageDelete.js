@@ -11,9 +11,16 @@ module.exports = class Ping extends Event {
 
   async run(client, message) {
     if (message.author.bot) return;
+    if (!message.guild.id === '779693986603991072') return;
     if (message.channel.id === '934120866185375744') return;
     if (message.channel.id === '945343437677408336') return;
     if (message.channel.id === '949674060294524988') return;
+    if (message.channel.id === '958302723588112396') return;
+    if (message.channel.id === '817324376281055262') return;
+    if (message.channel.id === '845015325715202099') return;
+    if (message.channel.id === '985632566608560208') return;
+    if (message.channel.id === '945363908078747688') return;
+    if (message.channel.parent.id === '833783079134953532') return;
     if (message.guild) {
       console.log(`[${message.author.tag}, ${message.guild.name}, ${message.channel}]-> ${message.content} (Deleted)`)
     } else {

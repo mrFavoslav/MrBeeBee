@@ -3,7 +3,7 @@ const { ArgumentType, Command } = require("gcommands");
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
-      name: "ban",
+      name: "pban",
       description: "Zabanuje uživatele.",
       userRequiredPermissions: 'BAN_MEMBERS' || 'ADMINISTRATOR',
       args: [
@@ -21,13 +21,6 @@ module.exports = class extends Command {
           prompt: "Důvod?",
           required: true,
         },
-        {
-          name: "time",
-          type: ArgumentType.STRING,
-          description: "Na jak dlouho chceš zabanovat uživatele?",
-          prompt: "Na jak dlouho? (V dnech. Např.: 1)",
-          required: true,
-        },
       ],
     });
   }
@@ -35,7 +28,6 @@ module.exports = class extends Command {
   async run({ client, respond, message, args }) {
 
     const target = args.getMember('target')
-    const time = args.getString('time')
     const reason = args.getString('reason')
 
     if (!target.bannable) return respond('Tohoto uživatele nelze zabanovat!');
@@ -45,10 +37,10 @@ module.exports = class extends Command {
       .setColor('#FF0000')
       .setAuthor(target.user.tag, target.user.displayAvatarURL({ dynamic: true }))
       .addFields(
-        { name: '**🔒 Ban**', value: '\u200B' },
+        { name: '**🔒 Permaban**', value: '\u200B' },
         { name: '📇 ID uživatele', value: `${target.user.id}`, inline: false },
         { name: '❓ Důvod', value: `${reason}`, inline: false },
-        { name: '🕒 Doba', value: `${time}d`, inline: false },
+        { name: '🕒 Doba', value: `Navždy`, inline: false },
       )
       .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
@@ -65,9 +57,9 @@ module.exports = class extends Command {
         .setColor('#FF0000')
         .setAuthor(target.user.tag, target.user.displayAvatarURL({ dynamic: true }))
         .addFields(
-          { name: '**🔒 Byl jsi zabanován!**', value: '\u200B' },
+          { name: '**🔒 Byl jsi permanentně zabanován!**', value: '\u200B' },
           { name: '❓ Důvod', value: `${reason}`, inline: false },
-          { name: '🕒 Doba', value: `${time}d`, inline: false },
+          { name: '🕒 Doba', value: `Navždy`, inline: false },
         )
         .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
 
@@ -75,7 +67,7 @@ module.exports = class extends Command {
       channel.send({ embeds: [banembed] })
 
       setTimeout(function () {
-        target.ban({ days: time, reason: reason })
+        target.ban({ reason: reason })
       }, 2000);
     }
   }

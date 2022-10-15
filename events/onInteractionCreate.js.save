@@ -13,13 +13,12 @@ module.exports = class Ping extends Event {
   async run(client, interaction) {
     if (interaction.member.bot) return;
     if (interaction.isCommand()) return;
-//    if (!message.guild.id === '779693986603991072') return;
+    if (!message.guild.id === '779693986603991072') return;
 
     /*-------------*/
     if (interaction.isButton()) {
       if (interaction.customId === 'verify') {
         interaction.deferUpdate()
-
         const AlrVerifiedEmbed = new Discord.MessageEmbed()
           .setColor('#FF0000')
           .setTitle('❌ Already Verified')

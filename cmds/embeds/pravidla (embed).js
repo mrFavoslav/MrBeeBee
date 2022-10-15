@@ -15,12 +15,12 @@ module.exports = class extends Command {
 	.setColor('#FF0000')
 	.setTitle('**📜 PRAVIDLA 📜**')
   .setDescription('Pravidla pro členy serveru.')
-  .setImage('https://cdn.discordapp.com/attachments/817323618576760853/930188454539706408/image-removebg-preview.png')
+  .setImage('https://cdn.discordapp.com/attachments/945363908078747688/999288521158303854/PRAVIDLA-1.png')
   .addFields(
 		{ name: '1)', value: 'Chovej se jako normální člověk.', inline: true },
 		{ name: '2)', value: 'Zákaz žebrání o role.', inline: true },
 		{ name: '3)', value: 'Je zakázáno otravovat A-Team nesmysly.', inline: true },
-    { name: '4)', value: 'Pokud najdeš nějaké nedostatky nebo chyby v pravidlech tak je nezneužívej.', inline: true },
+    { name: '4)', value: 'Pokud najdeš nějaké nedostatky nebo chyby např. v pravidlech tak je nezneužívej.', inline: true },
     { name: '5)', value: 'Pokud Vás Team vyzve, abyste něco udělali (opustit místnost atd.) jste povinni to neprodleně učinit!', inline: true },
     { name: '6a)', value: 'Je zakázáno pouštět hudbu kromě místnosti tomu vyhrazeným (vyjímka, ostatním v kanálu to nevadí.)', inline: true },
     { name: '6b)', value: 'Je zakázáno pouštět zvuky, nebo cokoliv co by mohlo vadit dalším uživatelům ve vc.', inline: true },
@@ -38,7 +38,9 @@ module.exports = class extends Command {
     { name: '\u200B', value: '\u200B' },
     { name: 'TOS a Guidelines', value: '➣ Platí zde pravidla TOS a Guidelines @everyone\n🔗 https://discordapp.com/terms\n🔗 https://discordapp.com/guidelines\n➣ S ověřením souhlasíš s pravidly tohoto discord serveru a s pravidly TOS a Guidelines\n➣ Také souhlasíš že je ti více než 13 let a můžeš legálně používat discord, pokud AT zjistí že ti ještě 13 let nebylo bude ti udělen ban do doby než ti bude 13 let.', inline: true },
     { name: '\u200B', value: '\u200B' },
-    { name: 'Ověření', value: 'Ověříš se pomocí zareagování na tuto\nzprávu kliknutím na tlačítko = ✅', inline: true }
+    //{ name: 'Verification ✅', value: 'Ověříš se pomocí zareagování na tuto\nzprávu kliknutím na tlačítko = ✅', inline: true }
+    { name: 'Verification ✅', value: 'You can verify yourself by responding to this message\nby clicking the = ✅ button', inline: true }
+    //{ name: 'Verification ✅', value: 'Access to this server is temporarily suspended due to raiders. Contact the owner <@553946762289610785> for access. Thanks.\n\n**⚙️ Working on translating the rules into english.**', inline: true }
 	)
 	.setTimestamp()
   //.setFooter(client.user.username, client.user.displayAvatarURL({ dynamic: true }))
@@ -54,6 +56,7 @@ module.exports = class extends Command {
         .setEmoji('✅')
 			)
     
-    client.channels.cache.get('816664688015179782').messages.fetch('930185328256503878').then(msg => msg.edit({ embeds: [customEmbed], components: [row] }))  
+    client.channels.cache.get('816664688015179782').messages.fetch('1005793202390966302').then(msg => msg.edit({ embeds: [customEmbed], components: [row] }))  
+    //client.channels.cache.get('816664688015179782').messages.fetch('1005793202390966302').then(msg => msg.edit({ embeds: [customEmbed], components: []}))
   }
 }
