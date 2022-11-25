@@ -1,0 +1,42 @@
+process.env.TZ = "Europe/Amsterdam";
+console.log(new Date().toString());
+
+const { Client, Discord, GatewayIntentBits } = require("discord.js");
+//const { Client, Intents } = require('discord.js');
+const { GClient } = require("gcommands");
+const { join, path } = require("path");
+const client = new GClient({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
+  ],
+  partials: ["MESSAGE", "CHANNEL", "REACTION"],
+  dirs: [join(__dirname, "cmds"), join(__dirname, "events")],
+  language: "czech",
+  commands: {
+    unkownCommandMessage: false,
+    caseSensitiveCommands: false,
+    caseSensitivePrefixes: true,
+    slash: "slash", //slash = slash only, message = only normal, both = slash and normal
+    context: "false", // https://gcommands.js.org/docs/#/docs/main/dev/typedef/GCommandsOptionsCommandsContext
+    messagePrefix: "bp", // for normal commands
+  },
+  defaultCooldown: "3s",
+});
+
+client.on("log", console.log).on("debug", console.log);
+
+//require('dotenv').config({ path: join(__dirname, '/home/ubuntu/mrbb/.env') })
+var input = "P"; //R=Release/P=PreRelease
+if (input === "R") {
+  var input = "TOKENR";
+} else if (input === "P") {
+  var input = "TOKENP";
+} else return console.log("Can't read TOKEN");
+console.log(input, "was chosen.");
+//require("dotenv").config();
+require("dotenv").config("/home/ubuntu/mrbb/.env");
+//console.log(process.env[input]);
+client.login(process.env[input]);

@@ -1,15 +1,9 @@
-const Discord = require('discord.js');
-const { Event } = require("gcommands")
-module.exports = class Ping extends Event {
-  constructor(client) {
-    super(client, {
-      name: "messageDelete",
-      once: false,
-      ws: false
-    })
-  }
-
-  async run(client, message) {
+const { Discord, EmbedBuilder } = require('discord.js');
+const { Listener } = require("gcommands");
+new Listener({
+  event: "messageDelete",
+  name: "messageDeleteBOAGC",
+  run: (client, message) => {
     if (message.author.bot) return;
     if (!message.guild.id === '779693986603991072') return;
     if (message.channel.id === '934120866185375744') return;
@@ -40,5 +34,5 @@ module.exports = class Ping extends Event {
     } else {
       return
     }
-  }
-};
+  },
+});

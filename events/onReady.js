@@ -1,30 +1,34 @@
-const Discord = require('discord.js');
-const { Event } = require("gcommands")
-const StatusUpdater = require('@tmware/status-rotate')
-module.exports = class Ping extends Event {
-  constructor(client) {
-    super(client, {
-      name: "ready",
-      once: false,
-      ws: false
-    })
-  }
-
-  async run(client) {
-    console.log(`Přihlášen - ${client.user.tag}!`)
+const { Discord, ActivityType, Client, Attachment, Message, EmbedBuilder } = require("discord.js");
+const StatusUpdater = require("@tmware/status-rotate");
+const { Listener } = require("gcommands");
+new Listener({
+  event: "ready",
+  name: "readyBOAGC",
+  run: (client) => {
+    console.log(`Přihlášen - ${client.user.tag}!`);
 
     //--Status bota
-    const botvers = require('../package.json');
+    const botvers = require("../package.json");
     /*const statusMessages = [{ type: 'STREAMING', url: 'https://www.twitch.tv/Favoslav_', name: '🇺🇦 Стою за Україну!' },
     { type: 'STREAMING', url: 'https://www.twitch.tv/Favoslav_', name: `${botvers.state} ${botvers.version}${botvers.stage}` }]*/
 
-    client.user.setActivity(`${botvers.state} ${botvers.version}${botvers.stage}`, {
+    /*client.user.setActivity(`${botvers.state} ${botvers.version}${botvers.stage}`, {
       type: 'STREAMING',
       url: 'https://www.twitch.tv/Favoslav_'
+    });*/
+
+   client.user.setPresence({
+      activities: [
+        {
+          name: `${botvers.state} ${botvers.version}${botvers.stage}`,
+          type: ActivityType.Streaming,
+          url: "https://www.twitch.tv/Favoslav_",
+        },
+      ],
+      status: "online",
     });
 
     //const Updater = new StatusUpdater(client, statusMessages)
-
     //Updater.start(8 * 1000)
 
     /*client.user.setActivity(`Happy new year! 🎉`, {
@@ -37,7 +41,7 @@ module.exports = class Ping extends Event {
     //keepAlive();
 
     //--Server status embeds
-    const util = require('minecraft-server-util');
+    const util = require("minecraft-server-util");
     /*111111111111111-----sfsdfsd--------*/ /*setInterval(function() {
       util.status('mod.large-lands.tk')
         .then((result) => {
@@ -74,47 +78,47 @@ module.exports = class Ping extends Event {
         });
     }, 30000);
     
-/*IT1A-----sfsdfsd--------*/ setInterval(function () {
-      util.status('it1a.boagc.tk')
+/*IT1A-----sfsdfsd--------*//* setInterval(function () {
+      util.status("it1a.boagc.tk")
         .then((result) => {
-          const onembed = new Discord.MessageEmbed()
-            .setColor('#00FF04')
-            .setTitle('🟢 Status: Online')
-            .setDescription('\u200B\n🔄 Status se obnovuje každou minutu.\n\u200B\n')
+          const onembed = new EmbedBuilder()
+            .setColor("#00FF04")
+            .setTitle("🟢 Status: Online")
+            .setDescription("\u200B\n🔄 Status se obnovuje každou minutu.\n\u200B\n")
             //.setThumbnail("https://cdn.discordapp.com/attachments/817323618576760853/923635592791748618/favicon.png")
-            .setThumbnail('https://cdn.discordapp.com/attachments/945363908078747688/1005795252428349460/GeoGlitchedv2ICON.png')
-            .addField('💻 IP:', `it1a.boagc.tk`)
-            .addField('🗞️ Verze:', `${result.version.name}`)
-            .addField('🔢 Online Hráči:', `${result.players.online}`)
-            .addField('📈 Max. Počet Hráčů:', `${result.players.max}`)
-            .addField('📶 Motd:', `${result.motd.clean}`)
-            .addField('🗺️ DynMapa:', `http://map.boagc.tk/`)
-            .setTimestamp()
+            .setThumbnail("https://cdn.discordapp.com/attachments/945363908078747688/1005795252428349460/GeoGlitchedv2ICON.png")
+            .addField("💻 IP:", `it1a.boagc.tk`)
+            .addField("🗞️ Verze:", `${result.version.name}`)
+            .addField("🔢 Online Hráči:", `${result.players.online}`)
+            .addField("📈 Max. Počet Hráčů:", `${result.players.max}`)
+            .addField("📶 Motd:", `${result.motd.clean}`)
+            .addField("🗺️ DynMapa:", `http://map.boagc.tk/`)
+            .setTimestamp();
 
           setTimeout(function () {
-            client.channels.cache.get('1028218159846674452').messages.fetch('1028265292805197905').then(msg => msg.edit({ embeds: [onembed] }))
+            //client.channels.cache.get('1028218159846674452').messages.fetch('1028265292805197905').then(msg => msg.edit({ embeds: [onembed] }))
           }, 5000);
-          client.channels.cache.get('836166237729587240').messages.fetch('923636305248784468').then(msg => msg.edit({ embeds: [onembed] }))
+          client.channels.cache.get("934120866185375744").messages.fetch("1040747791766536253").then((msg) => msg.edit({ embeds: [onembed] }));
         })
         .catch((error) => {
-          const offembed = new Discord.MessageEmbed()
-            .setColor('#FF0000')
-            .setTitle('🔴 Status: Offline')
-            .setDescription('\u200B\n🔄 Status se obnovuje každou minutu.\n\u200B')
+          const offembed = new EmbedBuilder()
+            .setColor("#FF0000")
+            .setTitle("🔴 Status: Offline")
+            .setDescription("\u200B\n🔄 Status se obnovuje každou minutu.\n\u200B")
             //.setThumbnail("https://cdn.discordapp.com/attachments/817323618576760853/923635592791748618/favicon.png")
-            .setThumbnail('https://cdn.discordapp.com/attachments/945363908078747688/1005795252428349460/GeoGlitchedv2ICON.png')
-            .addField('💻 IP:', `🚫 -`)
-            .addField('🗞️ Verze:', `🚫 -`)
-            .addField('🔢 Online Hráči:', `🚫 -`)
-            .addField('📈 Max. Počet Hráčů:', `🚫 -`)
-            .addField('📶 Motd:', `🚫 -`)
-            .addField('🗺️ DynMapa:', `🚫 -`)
-            .setTimestamp()
+            .setThumbnail("https://cdn.discordapp.com/attachments/945363908078747688/1005795252428349460/GeoGlitchedv2ICON.png")
+            .addField("💻 IP:", `🚫 -`)
+            .addField("🗞️ Verze:", `🚫 -`)
+            .addField("🔢 Online Hráči:", `🚫 -`)
+            .addField("📈 Max. Počet Hráčů:", `🚫 -`)
+            .addField("📶 Motd:", `🚫 -`)
+            .addField("🗺️ DynMapa:", `🚫 -`)
+            .setTimestamp();
 
           setTimeout(function () {
-            client.channels.cache.get('1028218159846674452').messages.fetch('1028265292805197905').then(msg => msg.edit({ embeds: [offembed] }))
+            //client.channels.cache.get('1028218159846674452').messages.fetch('1028265292805197905').then(msg => msg.edit({ embeds: [offembed] }))
           }, 5000);
-          client.channels.cache.get('836166237729587240').messages.fetch('923636305248784468').then(msg => msg.edit({ embeds: [onembed] }))
+          client.channels.cache.get("934120866185375744").messages.fetch("1040747791766536253").then((msg) => msg.edit({ embeds: [offembed] }));
         });
     }, 30000);
 
@@ -168,5 +172,5 @@ module.exports = class Ping extends Event {
        client.channels.cache.get('921105849638862888').messages.fetch('923632304411267092').then(msg => msg.edit({ embeds: [offembed] }))
      });
  }, 60000);*/
-  }
-}
+  },
+});

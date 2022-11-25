@@ -1,8 +1,8 @@
 {
   "name": "MrBeeBee",
-  "version": "v4.6.3",
-  "state": "Maintained",
-  "stage": "Beta",
+  "version": "v1.0.5",
+  "state": "Migrating",
+  "stage": "PRE",
   "description": "MrBB - Discord Bot",
   "main": "index.js",
   "scripts": {
@@ -14,20 +14,25 @@
   },
   "keywords": [],
   "author": "Favoslav_",
-  "license": "BOAGC",
+  "license": "MIT",
   "dependencies": {
+    "@discordjs/rest": "^1.3.0",
     "@gcommands/events": "^2.1.1",
     "@tmware/status-rotate": "^1.2.9",
     "cron": "^1.8.2",
-    "discord.js": "^13.7.0",
+    "discord-api-types": "^0.37.17",
+    "discord.js": "^14.6.0",
     "dotenv": "^16.0.0",
     "dotenv-extended": "^2.9.0",
     "express": "^4.17.2",
-    "gcommands": "^8.0.3",
+    "gcommands": "^10.0.0",
     "minecraft-server-util": "^5.2.5",
-    "ms": "^2.1.3"
+    "ms": "^2.1.3",
+    "prompt-sync": "^4.2.0",
+    "readline-sync": "^1.4.10",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "node": "^17.7.2"
+    "node": "^19.0.1"
   }
 }
