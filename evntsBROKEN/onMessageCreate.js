@@ -1,15 +1,10 @@
-const Discord = require('discord.js');
-const { Event } = require("gcommands")
-module.exports = class Ping extends Event {
-  constructor(client) {
-    super(client, {
-      name: "messageCreate",
-      once: false,
-      ws: false
-    })
-  }
-
-  async run(client, message) {
+const { Discord, Client, Attachment, message, MessageEmbed } = require('discord.js');
+const { Listener } = require("gcommands");
+new Listener({
+  event: "messageCreate",
+  name: "messageCreateBOAGC",
+  run: (client, message) => {
+    console.log(message.content)
     if (message.author.bot) return;
     if (message.channel.id === '934120866185375744') return;
     if (!message.guild.id === '779693986603991072') return;
@@ -32,7 +27,7 @@ module.exports = class Ping extends Event {
       return;
     }
 
-    const logEmbed = new Discord.MessageEmbed()
+    const logEmbed = new MessageEmbed()
       .setColor('#21C400')
       .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
       .setFooter(`${message.guild.name}`)
@@ -44,5 +39,5 @@ module.exports = class Ping extends Event {
     } else {
       return
     }
-  }
-};
+  },
+});

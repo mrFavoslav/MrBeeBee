@@ -10,12 +10,20 @@ module.exports = class extends Command {
   }
 
   async run({ respond, message }) {
-    const helpembed = new Discord.MessageEmbed()
+   /* const helpembed = new Discord.MessageEmbed()
       .setColor('#cc3300')
       .setTitle('**Help - Vyber si kategorii.**')
       .addField('Utilities', `Použití: ${prefix}helpu `)
       .addField('Fun', `Použití: ${prefix}helpf `)
       .addField('Moderation', `Použití: ${prefix}helpm `)
+      .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+      .setTimestamp()
+
+    respond(helpembed)*/
+    const helpembed = new Discord.MessageEmbed()
+      .setColor('#cc3300')
+      .setTitle('**Help - Dočasně nedostupný.**')
+      .addField('Warning', 'Momentálně prochází rekonstrukcí.')
       .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
 
