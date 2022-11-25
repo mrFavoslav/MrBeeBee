@@ -1,37 +1,35 @@
-const { Discord, EmbedBuilder } = require("discord.js");
-const { Command, CommandType, Argument, ArgumentType } = require("gcommands");
-new Command({
-  name: "howgay",
-  description: "How much you are gay?",
-  type: [CommandType.SLASH],
-  arguments: [
-    new Argument({
-      name: "target",
-      description: "Pick a user or press enter for picking yourself.",
-      type: ArgumentType.USER,
-      required: false,
-    }),
-  ],
-  run: (ctx, rng) => {
-    const target = ctx.arguments.getMember("target")?.user || ctx.user;
+const Discord = require('discord.js');
+const { ArgumentType, Command } = require("gcommands");
+module.exports = class extends Command {
+  constructor(...args) {
+    super(...args, {
+      name: "howgay",
+      description: "",
+      args: [
+        {
+          name: "target",
+          type: ArgumentType.USER,
+          description: "Target",
+          prompt: "U koho chceš zjistit na kolik procent je gay?",
+          required: false,
+        },
+      ],
+    });
+  }
 
-    rng = Math.floor(Math.random() * 101);
+  async run({ respond, rng, message, args }) {
 
-    const howgayembed = new EmbedBuilder()
-      .setColor("#E800FF")
-      .setTitle(`🏳️‍🌈 GAY METER 🏳️‍🌈`)
-      /*.setFooter({
-        text: target.tag.toString(),
-        iconURL: target.displayAvatarURL({ dynamic: true }),
-      })*/
-      .addFields({
-        name: `❓ On What percentage are you GAY?`,
-        value: `**🌈 ${target.username} is on ${rng}% GAY!**`,
-      })
-      .setImage('https://images.foxtv.com/static.ktvu.com/www.ktvu.com/content/uploads/2021/06/932/524/traditional-rainbow-flag.jpeg?size=512')
-      .setThumbnail(target.displayAvatarURL({ dynamic: true }))
-      .setTimestamp()
+     const target = args.getUser('target') || message.author
 
-    return ctx.reply({ embeds: [howgayembed] });
-  },
-});
+        rng = Math.floor(Math.random() * 101);
+
+        const howgayembed = new Discord.MessageEmbed()
+        .setTitle(`-- GAY METER --`)
+        .setAuthor(target.tag, target.displayAvatarURL({ dynamic: true }))
+        .addField(`❓ Na kolik procent je ${target.username} Gay?`, `🌈 ${target.username} je na ${rng}% gay`)
+        .setColor('#E800FF')
+        .setTimestamp()
+
+        respond(howgayembed);
+  }
+}

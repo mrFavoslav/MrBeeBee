@@ -1,9 +1,15 @@
-const { Discord, EmbedBuilder } = require('discord.js');
-const { Listener } = require("gcommands");
-new Listener({
-  event: "messageUpdate",
-  name: "messageUpdateBOAGC",
-  run: (client, oldMessage, newMessage) => {
+const Discord = require('discord.js');
+const { Event } = require("gcommands")
+module.exports = class Ping extends Event {
+  constructor(client) {
+    super(client, {
+      name: "messageUpdate",
+      once: false,
+      ws: false
+    })
+  }
+
+  async run(client, oldMessage, newMessage) {
     if (newMessage.author.bot) return;
     if (!message.guild.id === '779693986603991072') return;
     if (newMessage.channel.id === '934120866185375744') return;
@@ -41,5 +47,5 @@ new Listener({
     } else {
       return
     }
-  },
-});
+  }
+};

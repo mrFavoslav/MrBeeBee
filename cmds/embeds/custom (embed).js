@@ -3,7 +3,7 @@ const { ArgumentType, Command } = require("gcommands");
 module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
-      name: "custom5456",
+      name: "ieufksdjhfbdkufhspifgwizfweifwefweufgo3216465165465",
       description: "Vytvoří custom embed zprávu.",
       userRequiredPermissions: 'ADMINISTRATOR',
       args: [

@@ -1,29 +1,29 @@
-const { Discord, EmbedBuilder } = require("discord.js");
-const { Command, CommandType, Argument, ArgumentType } = require("gcommands");
-new Command({
-  name: "avatar",
-  description: "Shows the user's Avatar.",
-  type: [CommandType.SLASH],
-  arguments: [
-    new Argument({
-      name: 'user',
-      description: 'Pick a user or press enter for picking yourself.',
-      type: ArgumentType.USER,
-      required: false,
-    })
-  ],
-  run: (ctx) => {
-    const usr = ctx.arguments.getMember('user')?.user || ctx.user;
-    //console.log(usr)
-    var eph = true;
+const Discord = require('discord.js');
+const { ArgumentType, Command } = require("gcommands");
+module.exports = class extends Command {
+  constructor(...args) {
+    super(...args, {
+      name: "avatar",
+      description: "Ukáže Avatar uživatele.",
+      args: [
+        {
+          name: "user",
+          type: ArgumentType.USER,
+          description: "Target",
+          prompt: "Čí avatar chceš dostat?",
+          required: false,
+        },
+      ],
+    });
+  }
 
-    const avatarEmbed = new EmbedBuilder()
-      .setColor("#00FFF3")
-      .setAuthor({
-        name: usr.tag,
-        iconURL: usr.displayAvatarURL({ dynamic: true }),
-      })
-      .setImage(usr.displayAvatarURL({ dynamic: true, size: 4096 }));
-    return ctx.safeReply({ embeds: [avatarEmbed], ephemeral: eph });
-  },
-});
+  async run({ respond, message, args }) {
+    const user = args.getUser('user') || message.author
+
+    const avatarEmbed = new Discord.MessageEmbed()
+      .setColor('#00FFF3')
+      .setAuthor(user.tag)
+      .setImage(user.displayAvatarURL({ dynamic: true, size: 512 }));
+    respond(avatarEmbed);
+  }
+} 

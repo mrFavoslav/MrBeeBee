@@ -1,42 +1,32 @@
-process.env.TZ = "Europe/Amsterdam";
-console.log(new Date().toString());
+process.env.TZ = "Europe/Amsterdam"; console.log(new Date().toString());
 
-const { GClient, Plugins, Command, Component } = require("gcommands");
-const { Client, Discord, GatewayIntentBits } = require("discord.js");
+const Discord = require('discord.js');
+//const { Client, Intents } = require('discord.js');
+const { GCommandsClient } = require("gcommands");
 const { join } = require("path");
-
-Plugins.search(__dirname);
-Command.setDefaults({
-  cooldown: "3s",
+const client = new GCommandsClient({
+  intents: new Discord.Intents(32767),
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+  loader: {
+    cmdDir: join(__dirname + "/cmds"),
+    eventDir: join(__dirname, "/events"),
+  },
+  language: "czech",
+  commands: {
+    unkownCommandMessage: false,
+    caseSensitiveCommands: false,
+    caseSensitivePrefixes: true,
+    slash: "message", //slash = slash only, message = only normal, both = slash and normal
+    context: "false", // https://gcommands.js.org/docs/#/docs/main/dev/typedef/GCommandsOptionsCommandsContext
+    prefix: "b", // for normal commands
+  },
+  defaultCooldown: "3s",
 });
 
-const client = new GClient({
-  dirs: [
-    join(__dirname, "cmds"),
-    join(__dirname, "components"),
-    join(__dirname, "events"),
-  ],
-  partials: ["MESSAGE", "CHANNEL", "REACTION"],
-  messageSupport: true,
-  messagePrefix: "bp",
-  devGuildId: process.env.DEV_SERVER,
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.GuildBans,
-  ],
-});
+client
+  .on("log", console.log)
+  .on("debug", console.log)
 
-client.on("log", console.log).on("debug", console.log);
-var input = "P"; //R=Release/P=PreRelease
-if (input === "R") {
-  var input = "TOKENR";
-} else if (input === "P") {
-  var input = "TOKENP";
-} else return console.log("Can't read TOKEN");
-console.log(input, "was chosen.");
-require("dotenv").config("/home/ubuntu/mrbb/.env");
-client.login(process.env[input]);
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '/home/ubuntu/mrbb/.env') })
+client.login(process.env.TOKEN)
