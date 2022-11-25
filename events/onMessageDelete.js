@@ -20,6 +20,7 @@ module.exports = class Ping extends Event {
     if (message.channel.id === '845015325715202099') return;
     if (message.channel.id === '985632566608560208') return;
     if (message.channel.id === '945363908078747688') return;
+    if (message.channel.id === '1042100469918609479') return;
     if (message.channel.parent.id === '833783079134953532') return;
     if (message.guild) {
       console.log(`[${message.author.tag}, ${message.guild.name}, ${message.channel}]-> ${message.content} (Deleted)`)

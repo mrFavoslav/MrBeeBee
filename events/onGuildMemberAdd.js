@@ -23,14 +23,14 @@ module.exports = class Ping extends Event {
         .setColor('#FF0000')
         .setTitle('🖐️ Welcome')
         //.setDescription(`Ahoj <@927613022934011925>! Vítej na **${member.guild.name}**! Je nás zde ${member.guild.memberCount}! Doufám že si to zde užiješ! Majitelem serveru je ${owner}! Přečti si prosím <#816664688015179782>! Díky.`)
-        .setDescription(`Ahoj ${member}! Vítej na **${member.guild.name}**! Je nás zde ${member.guild.memberCount}! Doufám že si to zde užiješ! Majitelem serveru je ${owner}! Přečti si prosím <#816664688015179782>! Díky.`)
+        .setDescription(`🇨🇿 Ahoj ${member}! Vítej na **${member.guild.name}**! Je nás zde ${member.guild.memberCount}! Doufám že si to zde užiješ! Majitelem serveru je ${owner}! Přečti si prosím <#816664688015179782>! Díky.\n\n🇬🇧 Hi ${member}! Welcome to **${member.guild.name}**! Now there are ${member.guild.memberCount} of us here! I hope you enjoy it here! The server is owned by ${owner}! Please read <#816664688015179782>! Thanks.`)
         .setAuthor(member.user.tag, member.user.displayAvatarURL({ dynamic: true }))
         //.setAuthor(mem.tag, mem.displayAvatarURL({ dynamic: true }))
         .setTimestamp()
         .setImage('https://cdn.discordapp.com/attachments/945363908078747688/982955966314201108/New-Member.png')
       if ((member.guild.id) === '779693986603991072') {
-      const channel = client.channels.cache.get('828674300969484298');
-      channel.send({ embeds: [joinembed] })
+        const channel = client.channels.cache.get('828674300969484298');
+        channel.send({ embeds: [joinembed] })
       } else {
         return
       }

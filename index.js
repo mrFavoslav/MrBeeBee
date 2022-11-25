@@ -28,5 +28,5 @@ client
   .on("debug", console.log)
 
 const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, '/home/ubuntu/mrbb/.env') })
+require('dotenv').config({ path: path.resolve(__dirname, '/var/backups/bot/mrbb_v4.6.4/.env') })
 client.login(process.env.TOKEN)

@@ -20,6 +20,7 @@ module.exports = class Ping extends Event {
     if (newMessage.channel.id === '845015325715202099') return;
     if (newMessage.channel.id === '985632566608560208') return;
     if (newMessage.channel.id === '945363908078747688') return;
+    if (newMessage.channel.id === '1042100469918609479') return;
     if (newMessage.channel.parent.id === '833783079134953532') return;
 
     if (oldMessage.content === newMessage.content) return;

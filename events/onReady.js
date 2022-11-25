@@ -95,8 +95,7 @@ module.exports = class Ping extends Event {
             client.channels.cache.get('1028218159846674452').messages.fetch('1028265292805197905').then(msg => msg.edit({ embeds: [onembed] }))
           }, 5000);
           client.channels.cache.get('836166237729587240').messages.fetch('923636305248784468').then(msg => msg.edit({ embeds: [onembed] }))
-        })
-        .catch((error) => {
+        }).catch((error) => {
           const offembed = new Discord.MessageEmbed()
             .setColor('#FF0000')
             .setTitle('🔴 Status: Offline')
@@ -114,7 +113,7 @@ module.exports = class Ping extends Event {
           setTimeout(function () {
             client.channels.cache.get('1028218159846674452').messages.fetch('1028265292805197905').then(msg => msg.edit({ embeds: [offembed] }))
           }, 5000);
-          client.channels.cache.get('836166237729587240').messages.fetch('923636305248784468').then(msg => msg.edit({ embeds: [onembed] }))
+          client.channels.cache.get('836166237729587240').messages.fetch('923636305248784468').then(msg => msg.edit({ embeds: [offembed] }))
         });
     }, 30000);
 
