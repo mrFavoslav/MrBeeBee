@@ -88,8 +88,8 @@ new Command({
   ],
   inhibitors: [
     new MemberPermissions({
-      permissions: [PermissionsBitField.Flags.Administrator],
-      message: 'You can\'t use this command. You need \'ADMINISTRATOR\' permissions!',
+      permissions: [PermissionsBitField.Flags.MANAGE_ROLES],
+      message: 'You can\'t use this command. You need \'MANAGE_ROLES\' permissions!',
       ephemeral: true,
     }),
   ],

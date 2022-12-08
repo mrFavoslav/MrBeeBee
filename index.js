@@ -10,6 +10,7 @@ Command.setDefaults({
   cooldown: "3s",
 });
 
+require("dotenv").config({ path: '/home/mrbb_bot/.env' });
 const client = new GClient({
   dirs: [
     join(__dirname, "cmds"),
@@ -31,6 +32,7 @@ const client = new GClient({
 });
 
 client.on("log", console.log).on("debug", console.log);
+
 var input = "P"; //R=Release/P=PreRelease
 if (input === "R") {
   var input = "TOKENR";
@@ -38,5 +40,4 @@ if (input === "R") {
   var input = "TOKENP";
 } else return console.log("Can't read TOKEN");
 console.log(input, "was chosen.");
-require("dotenv").config("/home/ubuntu/mrbb/.env");
 client.login(process.env[input]);

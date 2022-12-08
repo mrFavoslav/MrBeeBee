@@ -1,9 +1,8 @@
 module.exports = {
   apps: [{
     name: 'PreRelease',
-    script: '/home/ubuntu/mrbb/index.js',
-    watch: true,
+    script: '/home/mrbb_bot/index.js',
+    watch : false,
     cron_restart: '0 0 * * *',
-    ignore_watch : [],
   }]
 }
