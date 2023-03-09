@@ -2,9 +2,10 @@ const { Discord, EmbedBuilder, CommandInteractionOptionResolver } = require("dis
 const { Command, Inhibitor: { MemberPermissions, UserOnly }, CommandType, Argument, ArgumentType } = require("gcommands");
 const fs = require('fs-extra')
 const { request } = require('undici');
+const mysql = require('mysql');
 new Command({
   name: "api",
-  description: "Interacts with https://oauth2.favoslav-dev.tk api.",
+  description: "Interacts with https://oauth2.favoslav.cz api.",
   type: [CommandType.SLASH],
   arguments: [
     new Argument({
@@ -30,6 +31,12 @@ new Command({
               required: true,
             }),
             new Argument({
+              name: 'dscid',
+              description: 'Discord ID of the user.',
+              type: ArgumentType.INTEGER,
+              required: false,
+            }),
+            new Argument({
               name: 'custom',
               description: 'Create custom password. None if random.',
               type: ArgumentType.STRING,
@@ -51,10 +58,29 @@ new Command({
             new Argument({
               name: 'id',
               description: 'Delete by id.',
-              type: ArgumentType.STRING,
+              type: ArgumentType.INTEGER,
               required: true,
             })
           ]
+        }),
+        new Argument({
+          name: 'edit',
+          description: 'Password manager => edit user\'s info by id.',
+          type: ArgumentType.SUB_COMMAND,
+          arguments: [
+            new Argument({
+              name: 'id',
+              description: 'Edit by id.',
+              type: ArgumentType.INTEGER,
+              required: true,
+            })
+          ]
+        }),
+        new Argument({
+          name: 'show',
+          description: 'Password manager => Show all users (id, name and discord id)',
+          type: ArgumentType.SUB_COMMAND,
+          arguments: []
         }),
       ]
     }),
@@ -67,7 +93,7 @@ new Command({
           name: 'renew',
           description: 'Renew OAUTH2 collected data. True if yes.',
           type: ArgumentType.BOOLEAN,
-          required: true,
+          required: false,
         })
       ]
     }),
@@ -85,9 +111,11 @@ new Command({
 
     const random = ctx.arguments.getBoolean('random') || false;
     const ctid = ctx.arguments.getInteger('ctid');
+    const id = ctx.arguments.getInteger('id');
     const custom = ctx.arguments.getString('custom');
-    const renew = ctx.arguments.getBoolean('renew');
+    const renew = ctx.arguments.getBoolean('renew') || true;
     const usrnm = ctx.arguments.getString('usrnm');
+    const dscid = ctx.arguments.getInteger('dscid') || null;
 
     var eph = true;
 
@@ -134,7 +162,6 @@ new Command({
 
         const { hashedKey, key } = generateRanKey()
 
-        const mysql = require('mysql');
         require("dotenv").config({ path: '/home/mrbb_bot/.env' });
         //console.log(process.env.HOST, process.env.DBUSER85, process.env.PASS, process.env.PORT)
         const connection = mysql.createConnection({
@@ -147,8 +174,19 @@ new Command({
 
         connection.connect((error) => {
           if (error) {
-            console.log('--> Error connecting to the MySQL Database', error);
-            return;
+            const scopeEmbed = new EmbedBuilder()
+              .setColor("#ff0000")
+              .setTitle('https://favoslav.cz/yiff_db/')
+              .setDescription('Something went wrong.')
+              .setAuthor({
+                name: ctx.user.tag,
+                iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+              })
+              .addFields({
+                name: `Error:`,
+                value: `${error}`,
+              })
+            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
           }
           console.log('--> Connection established sucessfully');
         });
@@ -157,7 +195,7 @@ new Command({
           if (err) {
             const scopeEmbed = await new EmbedBuilder()
               .setColor("#ff0000")
-              .setTitle('https://favoslav.tk/yiff_db/')
+              .setTitle('https://favoslav.cz/yiff_db/')
               .setDescription('Something went wrong.')
               .setAuthor({
                 name: ctx.user.tag,
@@ -178,11 +216,11 @@ new Command({
 
           connection.query(`SELECT usrnm FROM yiff_db_secstor WHERE usrnm = '${usrnm}'`, async function (err, result, field) {
             if (result.length === 0) {
-              connection.query(`INSERT INTO yiff_db_secstor (id, ctid, usrnm, pass) VALUES ('${ID}', '${ctid}', '${usrnm}', '${hashedKey}')`, async function (err, result) {
+              connection.query(`INSERT INTO yiff_db_secstor (id, ctid, usrnm, pass, dsc_id) VALUES (${ID}, ${ctid}, '${usrnm}', '${hashedKey}', ${dscid})`, async function (err, result) {
                 if (err) {
                   const scopeEmbed = await new EmbedBuilder()
                     .setColor("#ff0000")
-                    .setTitle('https://favoslav.tk/yiff_db/')
+                    .setTitle('https://favoslav.cz/yiff_db/')
                     .setDescription('Something went wrong.')
                     .setAuthor({
                       name: ctx.user.tag,
@@ -195,11 +233,12 @@ new Command({
                   return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
                 }
                 console.log("1 record inserted");
+                connection.end();
               });
 
               const scopeEmbed = await new EmbedBuilder()
                 .setColor("#ff0000")
-                .setTitle('https://favoslav.tk/yiff_db/')
+                .setTitle('https://favoslav.cz/yiff_db/')
                 .setAuthor({
                   name: ctx.user.tag,
                   iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
@@ -219,12 +258,15 @@ new Command({
                 }, {
                   name: `User's name:`,
                   value: `${usrnm}`,
+                }, {
+                  name: `User's Discord ID:`,
+                  value: `${dscid ?? 'Not set'}`,
                 })
               return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
             } else if (result.length === 1) {
               const scopeEmbed = await new EmbedBuilder()
                 .setColor("#ff0000")
-                .setTitle('https://favoslav.tk/yiff_db/')
+                .setTitle('https://favoslav.cz/yiff_db/')
                 .setDescription('This user already exists!')
                 .setAuthor({
                   name: ctx.user.tag,
@@ -235,35 +277,197 @@ new Command({
           });
         });
       } else if (sub === 'remove') {
+
+        require("dotenv").config({ path: '/home/mrbb_bot/.env' });
+        const connection = mysql.createConnection({
+          host: process.env.HOST,
+          user: process.env.DBUSER85,
+          password: process.env.PASS,
+          database: 'yiff_db',
+          port: process.env.PORT,
+        });
+
+        connection.connect((error) => {
+          if (error) {
+            const scopeEmbed = new EmbedBuilder()
+              .setColor("#ff0000")
+              .setTitle('https://favoslav.cz/yiff_db/')
+              .setDescription('Something went wrong.')
+              .setAuthor({
+                name: ctx.user.tag,
+                iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+              })
+              .addFields({
+                name: `Error:`,
+                value: `${error}`,
+              })
+            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+          }
+          console.log('--> Connection established sucessfully');
+        });
+
+        connection.query(`SELECT * FROM yiff_db_secstor WHERE id = ${id}`, async function (err, result, field) {
+          if (err) {
+            const scopeEmbed = await new EmbedBuilder()
+              .setColor("#ff0000")
+              .setTitle('https://favoslav.cz/yiff_db/')
+              .setDescription('Something went wrong.')
+              .setAuthor({
+                name: ctx.user.tag,
+                iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+              })
+              .addFields({
+                name: `Error:`,
+                value: `${error}`,
+              })
+            connection.end();
+            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+          };
+
+          const scopeEmbed = await new EmbedBuilder()
+            .setColor("#ff0000")
+            .setTitle('https://favoslav.cz/yiff_db/')
+            .setAuthor({
+              name: ctx.user.tag,
+              iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+            })
+            .addFields({
+              name: `Hashed key:`,
+              value: `${result[0].pass}`,
+            }, {
+              name: `ID:`,
+              value: `${result[0].id}`,
+            }, {
+              name: `Content ID:`,
+              value: `${result[0].ctid}`,
+            }, {
+              name: `User's name:`,
+              value: `${result[0].usrnm}`,
+            }, {
+              name: `User's Discord ID:`,
+              value: `${result[0].dsc_id ?? 'Not set'}`,
+            })
+          connection.query(`DELETE FROM yiff_db_secstor WHERE id = ${id}`, async function (error, results, fields) {
+            if (error) {
+              const scopeEmbed = await new EmbedBuilder()
+                .setColor("#ff0000")
+                .setTitle('https://favoslav.cz/yiff_db/')
+                .setDescription('Something went wrong.')
+                .setAuthor({
+                  name: ctx.user.tag,
+                  iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+                })
+                .addFields({
+                  name: `Error:`,
+                  value: `${error}`,
+                })
+              connection.end();
+              return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+            };
+            console.log('Deleted ' + results.affectedRows + ' rows.');
+          });
+          connection.end();
+          return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+        })
+      } else if (sub === 'show') {
+        require("dotenv").config({ path: '/home/mrbb_bot/.env' });
+        const connection = mysql.createConnection({
+          host: process.env.HOST,
+          user: process.env.DBUSER85,
+          password: process.env.PASS,
+          database: 'yiff_db',
+          port: process.env.PORT,
+        });
+
+        connection.connect((error) => {
+          if (error) {
+            const scopeEmbed = new EmbedBuilder()
+              .setColor("#ff0000")
+              .setTitle('https://favoslav.cz/yiff_db/')
+              .setDescription('Something went wrong.')
+              .setAuthor({
+                name: ctx.user.tag,
+                iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+              })
+              .addFields({
+                name: `Error:`,
+                value: `${error}`,
+              })
+            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+          }
+          console.log('--> Connection established sucessfully');
+        });
+
+        connection.query(`SELECT id, usrnm, dsc_id FROM yiff_db_secstor`, async function (err, result, field) {
+          if (err) {
+            const scopeEmbed = await new EmbedBuilder()
+              .setColor("#ff0000")
+              .setTitle('https://favoslav.cz/yiff_db/')
+              .setDescription('Something went wrong.')
+              .setAuthor({
+                name: ctx.user.tag,
+                iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+              })
+              .addFields({
+                name: `Error:`,
+                value: `${error}`,
+              })
+            connection.end();
+            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+          };
+
+          console.log(result)
+          const scopeEmbed = await new EmbedBuilder()
+            .setColor("#ff0000")
+            .setTitle('https://favoslav.cz/yiff_db/')
+            .setAuthor({
+              name: ctx.user.tag,
+              iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+            })
+
+          for (const row of result) {
+            scopeEmbed.addFields({
+              name: `ID: ${row.id}`,
+              value: `Username: ${row.usrnm}\nDiscord ID: ${row.dsc_id ?? 'Not set'}`,
+            });
+          }
+          connection.end();
+          return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+        })
       }
     } else if (sub === 'oauth2') {
       if (renew == true) {
-        const root_folder = fs.readdirSync('/home/mrbb_app/data/user_data/');
-        root_folder.forEach(async (reslt) => {
-          const { access_token, token_type } = require(`/home/mrbb_app/data/user_data/${reslt}/oauthData.json`);
-          const userResult = await request('https://discord.com/api/users/@me', {
-            headers: { authorization: `${token_type} ${access_token}`, },
-          });
-          const userResultData = await userResult.body.json();
-          const userResultDataStringify = JSON.stringify(userResultData, null, 4)
-          if (userResultData === undefined) return console.log('userResultData is undefined.')
-          fs.mkdirSync(`/home/mrbb_app/data/user_data/${userResultData.id}`, { recursive: true })
-          //fs.writeFile(`/home/mrbb_app/data/user_data2/${userResultData.id}/oauthData.json`, oauthDataStringify, (err) => { if (err) throw err; })
-          fs.writeFile(`/home/mrbb_app/data/user_data/${userResultData.id}/userResultData.json`, userResultDataStringify, (err) => { if (err) throw err; })
-        });
+        fetch('https://oauth2.favoslav.cz/renew')
+          .then(response => {
+            const contentType = response.headers.get('content-type');
+            const cacheControl = response.headers.get('cache-control');
 
-        const scopeEmbed = await new EmbedBuilder()
-          .setColor("#ff0000")
-          .setTitle('https://oauth2.favoslav-dev.tk')
-          .setAuthor({
-            name: ctx.user.tag,
-            iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+            return response.json();
           })
-          .addFields({
-            name: `State`,
-            value: `All of authorized users data has been renewed.`,
+          .then(data => {
+            console.log(data);
+
+            const embed = new EmbedBuilder()
+              .setTitle('Refresh Token Status https://oauth2.favoslav.cz/renew')
+              .setColor("#ff0000")
+              .setAuthor({
+                name: ctx.user.tag,
+                iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+              })
+              .addFields(
+                Object.entries(data).map(([key, value]) => {
+                  return { name: key, value: `Refresh Token: ${value.refresh_token}\nStatus Code: ${value.statusCode}` };
+                })
+              );
+
+            if (fs.existsSync('/home/mrbb_app/cache/data.json')) {
+              fs.rmSync('/home/mrbb_app/cache/data.json', { recursive: true });
+            }
+            return ctx.safeReply({ embeds: [embed], ephemeral: eph });
           })
-        return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+          .catch(error => {
+            console.error(error);
+          });
       }
     }
   },

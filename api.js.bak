@@ -1,0 +1,74 @@
+if (fs.existsSync('/home/mrbb_app/data/user_data/undefined')) {
+          fs.rmdirSync('/home/mrbb_app/data/user_data/undefined', { recursive: true });
+        }
+
+        // const root_folder = fs.readdirSync('/home/mrbb_app/data/user_data/');
+        // root_folder.forEach(async (reslt) => {});
+
+        const root_folder = fs.readdirSync('/home/mrbb_app/data/user_data/');
+        for (const reslt of root_folder) {
+          try {
+            const { access_token, token_type, refresh_token } = require(`/home/mrbb_app/data/user_data/${reslt}/oauthData.json`);
+            const { clientId, clientSecret, port } = require('/home/mrbb_bot/config.json');
+
+            console.log(refresh_token)
+            const tokenResponseData = await request('https://discord.com/api/oauth2/token', {
+              method: 'POST',
+              body: new URLSearchParams({
+                grant_type: 'refresh_token',
+                client_id: clientId,
+                client_secret: clientSecret,
+                refresh_token: refresh_token,
+              }).toString(),
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            });
+
+            console.log(tokenResponseData)
+
+            if (!tokenResponseData.ok) {
+              console.error(`Error refreshing token for user ${reslt}: ${tokenResponseData.statusText}`);
+              return;
+            }
+
+            console.log("102")
+
+            const oauthData = await tokenResponseData.body.json();
+            const oauthDataStringify = JSON.stringify(oauthData, null, 4)
+
+            const userResult = await request('https://discord.com/api/users/@me', {
+              headers: {
+                authorization: `${oauthData.token_type} ${oauthData.access_token}`,
+              },
+            });
+
+            if (!userResult.ok) {
+              console.error(`Error getting user data for user ${reslt}: ${userResult.statusText}`);
+              return;
+            }
+
+            const userResultData = await userResult.body.json();
+            const userResultDataStringify = JSON.stringify(userResultData, null, 4)
+
+            console.log(userResultData, oauthData)
+
+            if (userResultData === undefined) return console.log('userResultData is undefined.')
+            fs.mkdirSync(`/home/mrbb_app/data/user_data/${userResultData.id}`, { recursive: true })
+            fs.writeFile(`/home/mrbb_app/data/user_data/${userResultData.id}/oauthData.json`, oauthDataStringify, (err) => { if (err) throw err; })
+            fs.writeFile(`/home/mrbb_app/data/user_data/${userResultData.id}/userResultData.json`, userResultDataStringify, (err) => { if (err) throw err; })
+          } catch (error) {
+            console.log(error)
+          }
+        }
+
+        const scopeEmbed = await new EmbedBuilder()
+          .setColor("#ff0000")
+          .setTitle('https://oauth2.favoslav.cz')
+          .setAuthor({
+            name: ctx.user.tag,
+            iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
+          })
+          .addFields({
+            name: `State`,
+            value: `All of authorized users data has been renewed.`,
+          })
+        return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
