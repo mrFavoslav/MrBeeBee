@@ -14,8 +14,6 @@ new Command({
   ],
   run: (ctx) => {
     const usr = ctx.arguments.getMember('user')?.user || ctx.user;
-    //console.log(usr)
-    var eph = true;
 
     const avatarEmbed = new EmbedBuilder()
       .setColor("#00FFF3")
@@ -24,6 +22,6 @@ new Command({
         iconURL: usr.displayAvatarURL({ dynamic: true }),
       })
       .setImage(usr.displayAvatarURL({ dynamic: true, size: 4096 }));
-    return ctx.safeReply({ embeds: [avatarEmbed], ephemeral: eph });
+    return ctx.safeReply({ embeds: [avatarEmbed], ephemeral: true });
   },
 });

@@ -4,23 +4,7 @@ new Command({
   name: "ping",
   description: "Shows bots ping.",
   type: [CommandType.SLASH],
-  /*arguments: [
-    new Argument({
-        name: 'visibility',
-        description: 'M/E -> M=Message is visible only for me, E=Message is visible for everyone.',
-        type: ArgumentType.STRING,
-        required: false,
-    })
-  ],*/
   run: (ctx, interaction) => {
-    /*var eph = ctx.arguments.getString('visibility') || true;
-    if (eph === "M") {
-      var eph = true;
-    } else if (eph === "E") {
-      var eph = false;
-    } else if (!eph === true) {
-      var eph = true;
-    }*/
     var eph = true;
     const calculating = new EmbedBuilder()
       .setTitle("⏳ Ping")

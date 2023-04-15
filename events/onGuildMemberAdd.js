@@ -22,9 +22,9 @@ new Listener({
             .setTimestamp()
             .setImage("https://cdn.discordapp.com/attachments/945363908078747688/982955966314201108/New-Member.png");
           if (client.guild.id === "779693986603991072") {
-            const channel = client.guild.channels.cache.get("828674300969484298");
+            const auditchannel = client.guild.channels.cache.get("828674300969484298");
             const channel2 = client.guild.channels.cache.get("1042100469918609479");
-            channel2.send({ embeds: [joinembed] });
+            auditchannel.send({ embeds: [joinembed] });
           } else {
             return;
           }

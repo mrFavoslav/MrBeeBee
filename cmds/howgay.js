@@ -14,16 +14,11 @@ new Command({
   ],
   run: (ctx, rng) => {
     const target = ctx.arguments.getMember("target")?.user || ctx.user;
-
     rng = Math.floor(Math.random() * 101);
 
     const howgayembed = new EmbedBuilder()
       .setColor("#E800FF")
       .setTitle(`🏳️‍🌈 GAY METER 🏳️‍🌈`)
-      /*.setFooter({
-        text: target.tag.toString(),
-        iconURL: target.displayAvatarURL({ dynamic: true }),
-      })*/
       .addFields({
         name: `❓ On What percentage are you GAY?`,
         value: `**🌈 ${target.username} is on ${rng}% GAY!**`,

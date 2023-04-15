@@ -4,7 +4,6 @@ new Listener({
   event: "guildMemberRemove",
   name: "guildMemberRemoveBOAGC",
   run: (client) => {
-	  //console.log(client.user)
     if (client.user.bot) return;
     if (client.user.id === '8166562009930792977') {
       console.log('--GargUS left.')
@@ -17,9 +16,9 @@ new Listener({
         .setTimestamp()
         .setImage('https://cdn.discordapp.com/attachments/945363908078747688/982955966553264178/Member-Left.png');
        if ((client.guild.id) === '779693986603991072') {
-        const BOAlogchannel = client.guild.channels.cache.get('958302723588112396');
+        const auditchannel = client.guild.channels.cache.get('958302723588112396');
         const BOAlogchannel2 = client.guild.channels.cache.get('1042100469918609479');
-        BOAlogchannel2.send({ embeds: [logEmbed] });
+        auditchannel.send({ embeds: [logEmbed] });
        } else {
         return console.log('Error in OGRem EVENT!');
       }

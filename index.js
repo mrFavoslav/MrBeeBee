@@ -2,12 +2,18 @@ process.env.TZ = "Europe/Amsterdam";
 console.log(new Date().toString());
 
 const { GClient, Plugins, Command, Component } = require("gcommands");
-const { Client, Discord, GatewayIntentBits } = require("discord.js");
+const { GatewayIntentBits } = require("discord.js");
 const { join } = require("path");
 
 Plugins.search(__dirname);
 Command.setDefaults({
   cooldown: "3s",
+});
+
+Component.setDefaults({
+	onError: (ctx, error) => {
+		return ctx.reply('Oops! Something went wrong')
+	} 
 });
 
 require("dotenv").config({ path: '/home/mrbb_bot/.env' });
