@@ -1,9 +1,15 @@
 const { Discord, EmbedBuilder } = require("discord.js");
 const { Command, CommandType, Argument, ArgumentType } = require("gcommands");
-new Command({
+const info = {
   name: "avatar",
-  description: "Shows the user's Avatar.",
-  type: [CommandType.SLASH],
+  showName: "Avatar",
+  description: "Shows users avatar",
+  type: [CommandType.SLASH]
+}
+new Command({
+  name: info.name,
+  description: info.description,
+  type: info.type,
   arguments: [
     new Argument({
       name: 'user',
@@ -25,3 +31,4 @@ new Command({
     return ctx.safeReply({ embeds: [avatarEmbed], ephemeral: true });
   },
 });
+module.exports = info;

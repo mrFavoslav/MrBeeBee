@@ -2,10 +2,22 @@ const { Client, Discord, EmbedBuilder, PermissionsBitField } = require("discord.
 const { Command, Inhibitor: { MemberPermissions, UserOnly }, CommandType, Argument, ArgumentType } = require('gcommands');
 const ms = require('ms');
 
+const info = {
+  name: "role",
+  showName: "Role Management",
+  description: "Adds/Removes roles 'automatically'",
+  legend: [
+    "``/role mas add``: tst",
+    "``/role mas remove``: tst",
+    "``/role single add``: tst",
+    "``/role single remove``: tst",
+  ],
+  type: [CommandType.SLASH]
+}
 new Command({
-  name: 'role',
-  description: 'Add/remove role',
-  type: [CommandType.SLASH],
+  name: info.name,
+  description: info.description,
+  type: info.type,
   arguments: [
     new Argument({
       name: 'mass',
@@ -179,3 +191,4 @@ new Command({
     }
   }
 })
+module.exports = info;

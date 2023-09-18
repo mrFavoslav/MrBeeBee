@@ -1,9 +1,15 @@
 const { Discord, EmbedBuilder } = require("discord.js");
 const { Command, CommandType, Argument, ArgumentType } = require("gcommands");
-new Command({
+const info = {
   name: "howgay",
-  description: "How much you are gay?",
-  type: [CommandType.SLASH],
+  showName: "HowGay",
+  description: "How much are you gay?",
+  type: [CommandType.SLASH]
+}
+new Command({
+  name: info.name,
+  description: info.description,
+  type: info.type,
   arguments: [
     new Argument({
       name: "target",
@@ -30,3 +36,4 @@ new Command({
     return ctx.reply({ embeds: [howgayembed] });
   },
 });
+module.exports = info;

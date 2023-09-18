@@ -1,9 +1,15 @@
 const { Client, Discord, EmbedBuilder } = require("discord.js");
 const { Command, CommandType, Argument, ArgumentType } = require("gcommands");
-new Command({
+const info = {
   name: "ping",
-  description: "Shows bots ping.",
-  type: [CommandType.SLASH],
+  showName: "Ping",
+  description: "Shows bots ping",
+  type: [CommandType.SLASH]
+}
+new Command({
+  name: info.name,
+  description: info.description,
+  type: info.type,
   run: (ctx, interaction) => {
     var eph = true;
     const calculating = new EmbedBuilder()
@@ -27,3 +33,4 @@ new Command({
     }, 1000);
   },
 });
+module.exports = info;

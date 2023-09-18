@@ -3,10 +3,27 @@ const { Command, Inhibitor: { MemberPermissions, UserOnly }, CommandType, Argume
 const fs = require('fs-extra')
 const { request } = require('undici');
 const mysql = require('mysql');
-new Command({
+const info = {
   name: "api",
-  description: "Interacts with https://api.favoslav.cz/v1/oauth2 api.",
-  type: [CommandType.SLASH],
+  showName: "API Management",
+  description: "Interacts with https://api.favoslav.cz/v1/oauth2 api",
+  legend: [
+    "``/api oauth2 (renew)``: Renews dsc oauth2 users tokens if possible",
+    "``/api ypass add``: Adds new user (access) to YiffDB",
+    "``/api ypass edit``: Edits users access data for YiffDB",
+    "``/api ypass show``: Shows all registered users on YiffDB",
+    "``/api ypass remove``: Removes users data from YiffDB",
+  ],
+  inhibitors: {
+    UserOnly: 553946762289610785,
+    MemberPermissions: ['MANAGE_MESSAGES'],
+  },
+  type: [CommandType.SLASH]
+}
+new Command({
+  name: info.name,
+  description: info.description,
+  type: info.type,
   arguments: [
     new Argument({
       name: 'ypass',
@@ -105,7 +122,7 @@ new Command({
       ephemeral: true,
     }),
   ],
-  DmAvailable: false,
+  // DmAvailable: false,
   run: async (ctx) => {
     const subgroup = ctx.arguments.getSubcommandGroup();
     const sub = ctx.arguments.getSubcommand();
@@ -125,7 +142,7 @@ new Command({
         if (random == true) {
           function generateRanKey() {
             const { randomBytes } = require('crypto');
-            const key = randomBytes(24).toString('hex')
+            const key = randomBytes(8).toString('hex')
             const hashedKey = hashKey(key);
 
             if (key[hashedKey]) {
@@ -479,3 +496,4 @@ new Command({
     }
   },
 });
+module.exports = info;

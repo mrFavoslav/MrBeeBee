@@ -1,9 +1,15 @@
 const { Client, Discord, EmbedBuilder, PermissionsBitField } = require("discord.js");
 const { Command, Inhibitor: { MemberPermissions, UserOnly }, CommandType, Argument, ArgumentType } = require("gcommands");
-new Command({
+const info = {
   name: "purge",
-  description: "Deletes messages from chat.",
-  type: [CommandType.SLASH],
+  showName: "Purge",
+  description: "Purges messages from chat",
+  type: [CommandType.SLASH]
+}
+new Command({
+  name: info.name,
+  description: info.description,
+  type: info.type,
   arguments: [
     new Argument({
       name: 'count',
@@ -61,3 +67,4 @@ new Command({
     return ctx.reply({ embeds: [purgeembed], ephemeral: eph })
   },
 });
+module.exports = info;
