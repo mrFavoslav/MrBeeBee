@@ -14,8 +14,6 @@ To add MrBB to your Discord server, you can use the following invite link: [Invi
 
 Once the bot is added to your server, you can use the `/help` command to view the available commands and their usage.
 
-# OR
-
 To customize the bot, follow these steps:
 
 1. Clone the repository: `git clone [https://github.com/your-repo](https://github.com/mrFavoslav/MrBeeBee).git`
