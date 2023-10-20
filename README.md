@@ -18,7 +18,7 @@ Once the bot is added to your server, you can use the `/help` command to view th
 
 To customize the bot, follow these steps:
 
-1. Clone the repository: `git clone [https://github.com/your-repo](https://github.com/mrFavoslav/MrBeeBee).git`
+1. Clone the repository: `git clone https://github.com/mrFavoslav/MrBeeBee.git`
 2. Install dependencies: `npm install`
 3. Set up environment variables: Copy the `.env.example` file to `.env` and update the variables with your own values.
 4. Start the API server: `npm start`
