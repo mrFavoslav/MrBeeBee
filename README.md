@@ -14,7 +14,7 @@ To add MrBB to your Discord server, you can use the following invite link: [Invi
 
 Once the bot is added to your server, you can use the `/help` command to view the available commands and their usage.
 
-#OR
+# OR
 
 To customize the bot, follow these steps:
 
