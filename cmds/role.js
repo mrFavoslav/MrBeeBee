@@ -5,7 +5,7 @@ const ms = require('ms');
 const info = {
   name: "role",
   showName: "Role Management",
-  description: "Adds/Removes roles 'automatically'",
+  description: "Adds/Removes roles automatically",
   legend: [
     "``/role mas add``: tst",
     "``/role mas remove``: tst",
