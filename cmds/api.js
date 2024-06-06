@@ -6,9 +6,9 @@ const mysql = require('mysql');
 const info = {
   name: "api",
   showName: "API Management",
-  description: "Interacts with https://api.favoslav.cz/v1/oauth2 api",
+  description: "Interacts with api.favoslav.cz and main database",
   legend: [
-    "``/api oauth2 (renew)``: Renews dsc oauth2 users tokens if possible",
+    //"``/api oauth2 (renew)``: Renews dsc oauth2 users tokens if possible",
     "``/api ypass add``: Adds new user (access) to YiffDB",
     "``/api ypass edit``: Edits users access data for YiffDB",
     "``/api ypass show``: Shows all registered users on YiffDB",
@@ -101,7 +101,7 @@ new Command({
         }),
       ]
     }),
-    new Argument({
+    /*new Argument({
       name: 'oauth2',
       description: 'OAUTH2 manager.',
       type: ArgumentType.SUB_COMMAND,
@@ -113,7 +113,7 @@ new Command({
           required: false,
         })
       ]
-    }),
+    }),*/
   ],
   inhibitors: [
     new UserOnly({
@@ -131,7 +131,7 @@ new Command({
     const ctid = ctx.arguments.getInteger('ctid');
     const id = ctx.arguments.getInteger('id');
     const custom = ctx.arguments.getString('custom');
-    const renew = ctx.arguments.getBoolean('renew') || true;
+    //const renew = ctx.arguments.getBoolean('renew') || true;
     const usrnm = ctx.arguments.getString('usrnm');
     const dscid = ctx.arguments.getString('dscid') || null;
 
@@ -455,7 +455,7 @@ new Command({
       } else if (sub === 'edit') {
         return ctx.safeReply({ content: '**This command is not avalaible yet...**', ephemeral: true });
       }
-    } else if (sub === 'oauth2') {
+    /*} else if (sub === 'oauth2') {
       if (renew == true) {
 
         require("dotenv").config({ path: '/home/api/.env' });
@@ -492,7 +492,7 @@ new Command({
           .catch(error => {
             console.error(error);
           });
-      }
+      }*/
     }
   },
 });
