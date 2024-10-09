@@ -31,30 +31,22 @@ function sortList(diratr) {
     }
   });
 
-  // Create an array to store the sorted lists
   const sortedLists = [];
-
-  // Define the number of objects in each segment
   const maxObjectsInFirstSegment = 4;
   const objectsInMiddleSegments = 3;
   const objectsInLastSegment = 4;
-
-  // Start with the first segment
   let currentIndex = 0;
 
-  // Process the first segment
   sortedLists.push(
     list.slice(currentIndex, currentIndex + maxObjectsInFirstSegment)
   );
   currentIndex += maxObjectsInFirstSegment;
 
-  // Process the middle segments
   while (currentIndex < list.length - objectsInLastSegment) {
     sortedLists.push(list.slice(currentIndex, currentIndex + objectsInMiddleSegments));
     currentIndex += objectsInMiddleSegments;
   }
 
-  // Process the last segment
   sortedLists.push(list.slice(currentIndex, currentIndex + objectsInLastSegment));
   return sortedLists;
 }
