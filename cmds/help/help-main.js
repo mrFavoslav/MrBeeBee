@@ -85,6 +85,6 @@ new Command({
     }
     row = new ActionRowBuilder().addComponents(buttonComponents);
 
-    return ctx.safeReply({embeds: [helpEmbed], ephemeral: true, components: [row]});
+    return ctx.safeReply({embeds: [helpEmbed], flags: 64, components: [row]});
   }
 })

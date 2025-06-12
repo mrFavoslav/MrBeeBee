@@ -8,7 +8,7 @@ new Command({
     new UserOnly({
       ids: ['553946762289610785'],
       message: 'You can\'t use this command!',
-      ephemeral: true,
+      flags: 64,
     }),
   ],
   run: async (ctx) =>{
@@ -29,7 +29,7 @@ new Command({
 
 
     await ctx.channel.send({ content: '@everyone', embeds: [xmasE] });
-    await ctx.deferReply({ephemeral: true});
+    await ctx.deferReply({flags: 64});
     await ctx.editReply({ content: 'Message sended!'});
   },
 });

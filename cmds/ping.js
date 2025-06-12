@@ -11,14 +11,14 @@ new Command({
   description: info.description,
   type: info.type,
   run: (ctx, interaction) => {
-    var eph = true;
+    var eph = 64;
     const calculating = new EmbedBuilder()
       .setTitle("⏳ Ping1")
       .addFields(
         { name: "🤖 Bots Ping", value: `Calculating...`, inline: true, },
         { name: "🌐 WebSocket Ping", value: `Calculating...`, inline: true, })
       .setTimestamp();
-    ctx.safeReply({ embeds: [calculating], ephemeral: eph });
+    ctx.safeReply({ embeds: [calculating], flags: eph });
 
     let ping = Date.now() - ctx.interaction.createdTimestamp
     const pingembed = new EmbedBuilder()
@@ -29,7 +29,7 @@ new Command({
       .setTimestamp();
 
     return setTimeout(function () {
-      return ctx.editReply({ embeds: [pingembed], ephemeral: eph });
+      return ctx.editReply({ embeds: [pingembed], flags: eph });
     }, 1000);
   },
 });

@@ -102,7 +102,7 @@ new Command({
     new MemberPermissions({
       permissions: [PermissionsBitField.Flags.MANAGE_ROLES],
       message: 'You can\'t use this command. You need \'MANAGE_ROLES\' permissions!',
-      ephemeral: true,
+      flags: 64,
     }),
   ],
   run: async (ctx) => {
@@ -148,7 +148,7 @@ new Command({
         if (member.roles.cache.has(role.id)) {
           ctx.reply({
             content: 'You already have this role!',
-            ephemeral: true,
+            flags: 64,
           })
           return;
         }
@@ -156,13 +156,13 @@ new Command({
           .then(() => {
             ctx.reply({
               content: 'Added!',
-              ephemeral: true,
+              flags: 64,
             })
           })
           .catch(e => {
             ctx.reply({
               content: e.toString(),
-              ephemeral: true,
+              flags: 64,
             })
           });
       } else {
@@ -170,7 +170,7 @@ new Command({
         if (!member.roles.cache.has(role.id)) {
           ctx.reply({
             content: 'You don\'t have this role!',
-            ephemeral: true,
+            flags: 64,
           })
           return;
         }
@@ -178,13 +178,13 @@ new Command({
           .then(() => {
             ctx.reply({
               content: 'Removed!',
-              ephemeral: true,
+              flags: 64,
             })
           })
           .catch(e => {
             ctx.reply({
               content: e,
-              ephemeral: true,
+              flags: 64,
             })
           });
       }

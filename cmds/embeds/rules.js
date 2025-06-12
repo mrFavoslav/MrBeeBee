@@ -9,7 +9,7 @@ new Command({
     new UserOnly({
       ids: ['553946762289610785'],
       message: 'You can\'t use this command!',
-      ephemeral: true,
+      flags: 64,
     }),
   ],
   run: async (ctx) => {
@@ -74,7 +74,7 @@ new Command({
     const channel = await ctx.client.channels.fetch('816664688015179782');
     const message = await channel.messages.fetch('1096869424843215060');
 
-    await ctx.reply({ content: "Sucesfully sended rules embed.", ephemeral: true });
+    await ctx.reply({ content: "Sucesfully sended rules embed.", flags: 64 });
     await message.edit({ embeds: [customEmbed], components: [row] });
     return;
   }

@@ -28,7 +28,7 @@ new Command({
         iconURL: usr.displayAvatarURL({ dynamic: true }),
       })
       .setImage(usr.displayAvatarURL({ dynamic: true, size: 4096 }));
-    return ctx.safeReply({ embeds: [avatarEmbed], ephemeral: true });
+    return ctx.safeReply({ embeds: [avatarEmbed], flags: 64 });
   },
 });
 module.exports = info;

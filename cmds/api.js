@@ -119,7 +119,7 @@ new Command({
     new UserOnly({
       ids: ['553946762289610785'],
       message: 'You can\'t use this command!',
-      ephemeral: true,
+      flags: 64,
     }),
   ],
   // DmAvailable: false,
@@ -135,7 +135,7 @@ new Command({
     const usrnm = ctx.arguments.getString('usrnm');
     const dscid = ctx.arguments.getString('dscid') || null;
 
-    var eph = true;
+    var eph = 64;
 
     if (subgroup === 'ypass') {
       if (sub === 'add') {
@@ -204,7 +204,7 @@ new Command({
                 name: `Error:`,
                 value: `${error}`,
               })
-            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+            return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
           }
           console.log('--> Connection established sucessfully');
         });
@@ -223,7 +223,7 @@ new Command({
                 name: `Error:`,
                 value: `${err}`,
               })
-            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+            return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
           }
 
           try {
@@ -248,7 +248,7 @@ new Command({
                       name: `Error:`,
                       value: `${err}`,
                     })
-                  return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+                  return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
                 }
                 console.log("1 record inserted");
                 connection.end();
@@ -280,7 +280,7 @@ new Command({
                   name: `User's Discord ID:`,
                   value: `${dscid ?? 'Not set'}`,
                 })
-              return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+              return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
             } else if (result.length === 1) {
               const scopeEmbed = await new EmbedBuilder()
                 .setColor("#ff0000")
@@ -290,7 +290,7 @@ new Command({
                   name: ctx.user.tag,
                   iconURL: ctx.user.displayAvatarURL({ dynamic: true }),
                 })
-              return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+              return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
             }
           });
         });
@@ -319,7 +319,7 @@ new Command({
                 name: `Error:`,
                 value: `${error}`,
               })
-            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+            return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
           }
           console.log('--> Connection established sucessfully');
         });
@@ -339,7 +339,7 @@ new Command({
                 value: `${error}`,
               })
             connection.end();
-            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+            return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
           };
 
           const scopeEmbed = await new EmbedBuilder()
@@ -380,12 +380,12 @@ new Command({
                   value: `${error}`,
                 })
               connection.end();
-              return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+              return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
             };
             console.log('Deleted ' + results.affectedRows + ' rows.');
           });
           connection.end();
-          return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+          return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
         })
       } else if (sub === 'show') {
         require("dotenv").config({ path: '/home/mrbb_bot/.env' });
@@ -411,7 +411,7 @@ new Command({
                 name: `Error:`,
                 value: `${error}`,
               })
-            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+            return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
           }
           console.log('--> Connection established sucessfully');
         });
@@ -431,7 +431,7 @@ new Command({
                 value: `${error}`,
               })
             connection.end();
-            return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+            return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
           };
 
           console.log(result)
@@ -450,10 +450,10 @@ new Command({
             });
           }
           connection.end();
-          return ctx.safeReply({ embeds: [scopeEmbed], ephemeral: eph });
+          return ctx.safeReply({ embeds: [scopeEmbed], flags: eph });
         })
       } else if (sub === 'edit') {
-        return ctx.safeReply({ content: '**This command is not avalaible yet...**', ephemeral: true });
+        return ctx.safeReply({ content: '**This command is not avalaible yet...**', flags: 64 });
       }
     /*} else if (sub === 'oauth2') {
       if (renew == true) {
@@ -487,7 +487,7 @@ new Command({
             if (fs.existsSync('/home/mrbb_app/cache/data.json')) {
               fs.rmSync('/home/mrbb_app/cache/data.json', { recursive: true });
             }
-            return ctx.safeReply({ embeds: [embed], ephemeral: eph });
+            return ctx.safeReply({ embeds: [embed], flags: eph });
           })
           .catch(error => {
             console.error(error);

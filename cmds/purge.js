@@ -22,11 +22,11 @@ new Command({
     new MemberPermissions({
       permissions: [PermissionsBitField.Flags.MANAGE_MESSAGES],
       message: 'You can\'t use this command. You need \'MANAGE_MESSAGES\' permissions!',
-      ephemeral: true,
+      flags: 64,
     }),
   ],
   run: (ctx) => {
-    var eph = true;
+    var eph = 64;
     const count = ctx.arguments.getInteger('count')
 
     const wrn1 = new EmbedBuilder()
@@ -47,8 +47,8 @@ new Command({
       })
       .setTimestamp();
 
-    if (count > 100) return ctx.safeReply({ embeds: [wrn1], ephemeral: eph });
-    if (count < 1) return ctx.safeReply({ embeds: [wrn2], ephemeral: eph })/*.then(setTimeout(() => ctx.deleteReply(), 5000))*/;
+    if (count > 100) return ctx.safeReply({ embeds: [wrn1], flags: eph });
+    if (count < 1) return ctx.safeReply({ embeds: [wrn2], flags: eph })/*.then(setTimeout(() => ctx.deleteReply(), 5000))*/;
 
     const purgeembed = new EmbedBuilder()
       .setColor('#cc3300')
@@ -64,7 +64,7 @@ new Command({
       .setTimestamp()
 
     ctx.interaction.channel.bulkDelete(count);
-    return ctx.reply({ embeds: [purgeembed], ephemeral: eph })
+    return ctx.reply({ embeds: [purgeembed], flags: eph })
   },
 });
 module.exports = info;
