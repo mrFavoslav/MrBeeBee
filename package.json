@@ -25,7 +25,7 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.5.0",
     "dotenv-extended": "^2.9.0",
-    "express": "^5.1.0",
+    "express": "^5.2.0",
     "fs-extra": "^11.3.0",
     "gcommands": "^10.0.0",
     "jquery": "^3.7.1",
